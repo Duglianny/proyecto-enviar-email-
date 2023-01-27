@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {  //esta es la propied
 
   const formulario = document.querySelector('#formulario');
 
+  const btnSubmit = document.querySelector('#formulario button[type="submit"]');//para seleccionae el boton  por su atributo 
+
   
   // paso 3 asisganr eventos 
 
@@ -64,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {  //esta es la propied
 
     //paso ###7 
 
-    if(e.target.id === 'email' && !validarEmail(e.target.value));{ //se manda a llamar auqi en validacion la funcion que seria para validar el email para que se ejecute el codigo de abajo de esta funcion el cual retorna false en caso de que no se cumpla la expresion regular en caso de que si retorna true  el e.target.value  para ver si el ususario escribio un email valido  el ! al principio es para negarlo es decir si no se cumple es condicion o validacion arroja esta codigo abajo   e.target.id === 'email' &&  esto se le agrego de ultimo ya que se jecuta este codigo de no cumplir la expresion regular en los demas campos entonces con esto se le indica con el && que se deben cumplir esas dos condiciones en ese campo que sea un email y que cumpla la expresion regular con el id del campo email para que solo sea ahi 
+    if(e.target.id === 'email' && !validarEmail(e.target.value)){ //se manda a llamar auqi en validacion la funcion que seria para validar el email para que se ejecute el codigo de abajo de esta funcion el cual retorna false en caso de que no se cumpla la expresion regular en caso de que si retorna true  el e.target.value  para ver si el ususario escribio un email valido  el ! al principio es para negarlo es decir si no se cumple es condicion o validacion arroja esta codigo abajo   e.target.id === 'email' &&  esto se le agrego de ultimo ya que se jecuta este codigo de no cumplir la expresion regular en los demas campos entonces con esto se le indica con el && que se deben cumplir esas dos condiciones en ese campo que sea un email y que cumpla la expresion regular con el id del campo email para que solo sea ahi 
 
       mostarAlerta('el email no es valido', e.target.parentElement)// aqio se dice el msj de la alerta con sus estilos del primer parametro y la refenrecia para que solo salga en ese div 
 
@@ -74,7 +76,15 @@ document.addEventListener('DOMContentLoaded', function() {  //esta es la propied
 
     limpiarAlerta(e.target.parentElement);     
 
-    //asignar los valores del objeto 
+    //paso ## 9 aignar los valores al objeto al pasa la validacion para que se agg cada valor a su campo correspondiente en cada objeto 
+
+    email[e.target.name] = e.target.value.trim().toLowerCase();  // a email que es el objeto de arriba e.target.name ya que cada campo asi como tiene un id cada uno tambien tiene un name  y eso es igual a lo que escriba el usuario eliminando los espacios y todo el minusculas con esto se van llenando los campos del objetis a medida que el usuario vaya llenando sus campos 
+
+  
+    //paso ###10 comprobar email
+
+    comprobarEmail();
+    
 
   }
     // PASO ##5 ALERTA DE ERROR EN LA VALIDACION EN CASO DE QUE NO SE LLENE CORRECTAMENTE 
@@ -128,6 +138,24 @@ document.addEventListener('DOMContentLoaded', function() {  //esta es la propied
     return resultado; //para retornar el resultado 
   }
 
+  //paso## 10 
+
+  function comprobarEmail() { //esta funcion se manda a llamar cada vez que se agregue algo en el formulario y se llama arriba en la validacion 
+
+    console.log( Object.values(email).includes('') ) 
+
+    /*if(Object.values(email).includes('')) { //este codigo me muestra del objeto email  el lado derecho que seriasn los valores que nos interesan por que son los valores que el usuario ha ingresado mientras que en vez de values fuera .keys me muestra el lado izquierdo o las llaves de los objetos, como esto retorna un arreglo se puede usar el metodo de arreglo .includes y lo que hace es tomar todos los valores del objeto y los agg a un arreglo y con .include verifica si al menos 1 de los valores contiee un string vacio y retorna true y false si todos los valores estan llenos y con eso se puede habilitar el boton  en si es para verificar que todos los campos esten llenos para que se habiite el boton 
+
+
+    }else{
+      btnSubmit.classList.remove('opacity-50');  //aqui dice que si arriba es false o esten todos los campos llenos se elimine esta clase de ese boton submit 
+
+      btnSubmit.disabled = false; // y tambien que cuando esten llenos el desabilitado que tiene se le quite 
+    }
+  
+    // console.log(Object.values(email).includes(''));*/
+  
+  }
 })
   
 
